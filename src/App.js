@@ -18,9 +18,12 @@ function App() {
   const handleAddContact = (newContact) => {
     setContacts((prevContacts) => [
       ...prevContacts,
-      { id: uuidv4(), ...newContact },
+      {
+        id: uuidv4(),
+        ...newContact,
+        gender: newContact.gender,
+      },
     ]);
-    console.log(contacts);
   };
 
   const RemoveContact = (id) => {
@@ -32,18 +35,18 @@ function App() {
 
   const editContact = (editedContact) => {
     const editedContactList = contacts.map((contact) => {
-      console.log(contact.name);
       if (contact.id === editedContact.id) {
         return {
-          id: contact.id,
+          // id: contact.id,
+          ...contact,
           name: editedContact.name,
           email: editedContact.email,
+          gender: editedContact.gender,
         };
       } else {
         return contact;
       }
     });
-    console.log(editedContactList);
     setContacts(editedContactList);
   };
 
@@ -53,7 +56,6 @@ function App() {
 
   const handleSearch = (search) => {
     setSearch(search);
-    console.log(search);
     if (search !== "") {
       const newSearchResult = contacts.filter((contact) => {
         return Object.values(contact)
@@ -61,10 +63,10 @@ function App() {
           .toLowerCase()
           .includes(search.toLowerCase());
       });
-      console.log(newSearchResult);
       setSearchResult(newSearchResult);
     }
   };
+  console.log("parent rendered");
   return (
     <div className="App">
       <Routes>

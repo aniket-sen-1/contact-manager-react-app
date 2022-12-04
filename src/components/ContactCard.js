@@ -2,14 +2,24 @@ import React from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaUserEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import profileImage from "../images/profileDemo.png";
+import { FcBusinesswoman, FcBusinessman } from "react-icons/fc";
+import { CgProfile } from "react-icons/cg";
 
 const ContactCard = (props) => {
-  const { id, name, email } = props.contact;
+  const { id, name, email, gender } = props.contact;
+
+  let profilePic = "";
+  if (gender === "male") {
+    profilePic = <FcBusinessman className="profile-image" />;
+  } else if (gender === "female") {
+    profilePic = <FcBusinesswoman className="profile-image" />;
+  } else {
+    profilePic = <CgProfile className="profile-image" />;
+  }
 
   return (
     <div key={id} className="item">
-      <img src={profileImage} className="profile-image" alt="image not found" />
+      <i>{profilePic}</i>
 
       <div className="detail">
         <Link

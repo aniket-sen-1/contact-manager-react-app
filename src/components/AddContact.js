@@ -9,9 +9,22 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
       : {
           name: "",
           email: "",
+          gender: "",
         }
   );
+  const [gender, setGender] = useState("");
   const navigate = useNavigate();
+  console.log(useLocation());
+  let api = `https://api.genderize.io?name=${
+    userDetail.name.trim().split(" ")[0]
+  }`;
+
+  const fetchGender = () => {
+    (async function () {
+      const response = await fetch(api).then((res) => res.json());
+      setGender(response.gender);
+    })();
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,21 +36,25 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (userDetail.name === "" || userDetail.email === "") {
+    if (userDetail.name.trim() === "" || userDetail.email.trim() === "") {
       alert("all the fields are mendetory");
       return;
     }
-    state ? handleEditContact(userDetail) : handleAddContact(userDetail);
+    if (state) {
+      handleEditContact({
+        ...userDetail,
+        gender: gender === null ? "unknown" : gender,
+      });
+    } else {
+      handleAddContact({
+        ...userDetail,
+        gender: gender === null ? "unknown" : gender,
+      });
+    }
+
     setUserDetail({ name: "", email: "" });
     navigate("/");
   };
-  console.log("-", userDetail.name);
-
-  // useEffect(() => {
-  //   if (state) {
-  //     setUserDetail({ name: state.contact.name, email: state.contact.email });
-  //   }
-  // }, [userDetail]);
 
   return (
     <div className="addContact container-body">
@@ -57,6 +74,7 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
             placeholder="Enter Your Name"
             value={userDetail.name}
             onChange={handleChange}
+            onBlur={fetchGender}
           />
         </div>
         <div className="input-group">
@@ -68,10 +86,13 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
             placeholder="Enter Your Email"
             value={userDetail.email}
             onChange={handleChange}
+            onBlur={fetchGender}
           />
         </div>
         {state ? (
-          <button className="add-button">Edit Contact</button>
+          <button className="add-button" onClick={fetchGender}>
+            Edit Contact
+          </button>
         ) : (
           <button className="add-button">Add Contact</button>
         )}

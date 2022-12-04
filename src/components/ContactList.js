@@ -18,7 +18,7 @@ const ContactList = (props) => {
       <div className="list-header container-body">
         <h2 className="list-heading">Contacts List</h2>
         <Link to="/addcontact">
-          <button className="add-contact">Add Contacts</button>
+          <button className="add-contact ">Add Contacts</button>
         </Link>
       </div>
       <div className="search-bar container-body">

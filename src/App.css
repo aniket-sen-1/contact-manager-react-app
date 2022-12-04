@@ -6,7 +6,7 @@
 }
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f4cfae38;
+  background-color: #fbf7f3;
 }
 
 .header {
@@ -113,6 +113,8 @@ hr {
   color: white;
   border: none;
   transition: all 0.35s;
+  border-radius: 6px;
+  height: 45px;
 }
 .contact-icon {
   /* padding-top: 10px; */
@@ -129,21 +131,25 @@ hr {
   display: flex;
   padding: 10px 7px;
   border: solid rgb(0, 0, 0) 2px;
+  border: solid white 2px;
+  border: #fcf5ef;
   border-radius: 6px;
   margin: 10px 0;
   align-items: center;
   background: #faebdf;
-  box-shadow: 0.5px 5.98256px 7.4564px rgba(0, 0, 0, 0.143);
+  background: #fee3cd;
+  box-shadow: 0.5px 4.98256px 10.4564px rgba(0, 0, 0, 0.193);
   width: calc(50% - 10px);
   gap: 10px;
   transition: all 0.35s;
+  text-shadow: 2px 2px 5px #00000027;
 }
 .add-contact:hover {
   background: #db5000;
 }
 .item:hover {
   background: #ff6a002a;
-  transform: scale(1.03);
+  transform: scale(1.02);
   box-shadow: 0px 5px 10.4564px rgba(0, 0, 0, 0.348);
 }
 .detail {
@@ -154,6 +160,8 @@ hr {
 }
 .profile-image {
   width: 40px;
+  font-size: 40px;
+  color: #dc5100;
 }
 .Link {
   text-decoration: none;
@@ -331,6 +339,7 @@ button {
 .list-input {
   width: 100%;
   max-width: 450px;
+  box-shadow: 0.5px 4.98256px 10.4564px rgba(0, 0, 0, 0.193);
 }
 @media only screen and (max-width: 675px) {
   .item {
