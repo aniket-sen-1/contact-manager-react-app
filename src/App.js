@@ -21,7 +21,6 @@ function App() {
       {
         id: uuidv4(),
         ...newContact,
-        gender: newContact.gender,
       },
     ]);
   };
@@ -92,7 +91,7 @@ function App() {
             }
           />
           <Route
-            path="/editcontact/:id"
+            path="/editcontact"
             element={
               <AddContact
                 handleAddContact={handleAddContact}
@@ -100,9 +99,9 @@ function App() {
               />
             }
           />
-          <Route path="/contactdetail/:id" element={<ContactsDetail />} />
+          <Route path="/contactdetail" element={<ContactsDetail />} />
           <Route
-            path="/deletecontact/:id"
+            path="/deletecontact"
             element={<DeleteContact handleRemoveContact={RemoveContact} />}
           />
         </Route>

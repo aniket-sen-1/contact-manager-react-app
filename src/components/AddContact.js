@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import AddAndRemoveButton from "../utility/addAndRemoveButton";
+import ClipLoader from "react-spinners/ClipLoader";
+import { Formik, useFormik } from "formik";
 
 const AddContact = ({ handleAddContact, handleEditContact }) => {
   const { state } = useLocation();
-  const [userDetail, setUserDetail] = useState(
-    state
-      ? { ...state.contact }
-      : {
-          name: "",
-          email: "",
-          gender: "",
-        }
-  );
-  const [gender, setGender] = useState("");
-  const navigate = useNavigate();
-  console.log(useLocation());
-  let api = `https://api.genderize.io?name=${
-    userDetail.name.trim().split(" ")[0]
-  }`;
+  const [disableAndLoading, setDisableAndLoading] = useState(false);
+  const [dataGot, setDataGot] = useState(false);
+  const [userDetail, setUserDetail] = useState({
+    name: "",
+    email: "",
+  });
 
-  const fetchGender = () => {
-    (async function () {
-      const response = await fetch(api).then((res) => res.json());
-      setGender(response.gender);
-    })();
-  };
+  // alert("hi");
+  const navigate = useNavigate();
+  // console.log(useLocation({...state.contact}));
+  // console.log("=========>===>=>=>", { ...state.contact });
+  useEffect(() => {
+    // console.log("=========>===>=>=>", { ...state.contact });
+    if (state) {
+      setUserDetail({ ...state.contact });
+    }
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,8 +32,21 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setDisableAndLoading(true);
+    let api = `https://api.genderize.io?name=${
+      userDetail.name.trim().split(" ")[0]
+    }`;
+
+    const response = await fetch(api).then((res) => res.json());
+    // setUserDetail((prevDetail) => ({
+    //   ...prevDetail,
+    //   fjdafjasdf: "djfafadf",
+    // }));
+    // alert(response.gender);
+    // alert(JSON.stringify(userDetail));
+
     if (userDetail.name.trim() === "" || userDetail.email.trim() === "") {
       alert("all the fields are mendetory");
       return;
@@ -43,22 +54,24 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
     if (state) {
       handleEditContact({
         ...userDetail,
-        gender: gender === null ? "unknown" : gender,
+        gender: response.gender,
       });
+      setDisableAndLoading(false);
+      navigate("/");
     } else {
       handleAddContact({
         ...userDetail,
-        gender: gender === null ? "unknown" : gender,
+        gender: response.gender,
       });
+      setDisableAndLoading(false);
+      navigate("/");
     }
-
     setUserDetail({ name: "", email: "" });
-    navigate("/");
   };
 
   return (
     <div className="addContact container-body">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form">
         {state ? (
           <h1 className="add-heading">Edit Contact</h1>
         ) : (
@@ -74,7 +87,6 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
             placeholder="Enter Your Name"
             value={userDetail.name}
             onChange={handleChange}
-            onBlur={fetchGender}
           />
         </div>
         <div className="input-group">
@@ -86,16 +98,15 @@ const AddContact = ({ handleAddContact, handleEditContact }) => {
             placeholder="Enter Your Email"
             value={userDetail.email}
             onChange={handleChange}
-            onBlur={fetchGender}
           />
         </div>
-        {state ? (
-          <button className="add-button" onClick={fetchGender}>
-            Edit Contact
-          </button>
-        ) : (
-          <button className="add-button">Add Contact</button>
-        )}
+
+        <AddAndRemoveButton
+          actionType={state ? "Edit" : "Add"}
+          disableAndLoading={disableAndLoading}
+          handleSubmit={handleSubmit}
+        />
+
         <Link to="/">
           <button className=" add-goto-list">Go to List</button>
         </Link>

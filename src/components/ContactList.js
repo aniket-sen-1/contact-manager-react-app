@@ -7,7 +7,7 @@ const ContactList = (props) => {
     <ContactCard
       contact={contact}
       handleRemoveContact={handleRemoveContact}
-      key={contact.id}
+      key={Math.random()}
     />
   ));
   function getKeys(event) {

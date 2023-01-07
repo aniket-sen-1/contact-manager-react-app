@@ -23,7 +23,7 @@ const ContactCard = (props) => {
 
       <div className="detail">
         <Link
-          to={`/contactdetail/${id}`}
+          to={`/contactdetail`}
           state={{ contact: props.contact }}
           className="Link"
         >
@@ -34,7 +34,7 @@ const ContactCard = (props) => {
 
       <div className="edit-contact">
         <Link
-          to={`/editcontact/${id}`}
+          to={`/editcontact`}
           state={{ contact: props.contact }}
           className="Link"
         >
@@ -45,7 +45,7 @@ const ContactCard = (props) => {
       </div>
       <div className="delete-contact">
         <Link
-          to={`/deletecontact/${id}`}
+          to={`/deletecontact`}
           state={{ contact: props.contact }}
           className="Link"
         >

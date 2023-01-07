@@ -90,6 +90,10 @@ hr {
   color: white;
   margin-top: 10px;
   transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .add-button:hover {
